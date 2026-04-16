@@ -1,7 +1,8 @@
 import 'package:bookly_app/Features/home/presntation/views/homeView.dart';
+import 'package:bookly_app/appRouter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class splash_view_body extends StatefulWidget {
   const splash_view_body({super.key});
@@ -23,11 +24,12 @@ class _splash_view_bodyState extends State<splash_view_body>
 
   void navigation() {
     Future.delayed(Duration(seconds: 2), () {
-      Get.to(
+    /*  Get.to(
         () => homeView(),
         transition: Transition.fade,
         duration: Duration(seconds: 2),
-      );
+      );*/
+      GoRouter.of(context).push(AppRouter.KHomeView);
     });
   }
 
