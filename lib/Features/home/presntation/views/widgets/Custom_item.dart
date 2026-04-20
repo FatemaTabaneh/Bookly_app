@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class custom_item extends StatelessWidget {
-  const custom_item({super.key});
+   const custom_item({required this.ImageUrl});
+  final String ImageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class custom_item extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             image: DecorationImage(
-              image: AssetImage('assets/images/test_image.png'),
+              image:NetworkImage(ImageUrl),
               fit: BoxFit.cover
             ),
           ),

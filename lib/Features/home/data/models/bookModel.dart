@@ -3,7 +3,7 @@ class BookModel {
   final String? id;
   final String? etag;
   final String? selfLink;
-  final VolumeInfo? volumeInfo;
+  final VolumeInfo volumeInfo;
   final SaleInfo? saleInfo;
   final AccessInfo? accessInfo;
   final SearchInfo? searchInfo;
@@ -13,7 +13,7 @@ class BookModel {
     this.id,
     this.etag,
     this.selfLink,
-    this.volumeInfo,
+    required this.volumeInfo,
     this.saleInfo,
     this.accessInfo,
     this.searchInfo,
@@ -25,9 +25,7 @@ class BookModel {
       id: json['id'],
       etag: json['etag'],
       selfLink: json['selfLink'],
-      volumeInfo: json['volumeInfo'] != null
-          ? VolumeInfo.fromJson(json['volumeInfo'])
-          : null,
+      volumeInfo: VolumeInfo.fromJson(json['volumeInfo']),
       saleInfo: json['saleInfo'] != null
           ? SaleInfo.fromJson(json['saleInfo'])
           : null,
@@ -57,7 +55,7 @@ class BookModel {
 class VolumeInfo {
   final String? title;
   final String? subtitle;
-  final List<String>? authors;
+  final List<dynamic>? authors;
   final String? publisher;
   final String? publishedDate;
   final String? description;
@@ -65,7 +63,7 @@ class VolumeInfo {
   final ReadingModes? readingModes;
   final int? pageCount;
   final String? printType;
-  final List<String>? categories;
+  final List<dynamic>? categories;
   final num? averageRating;
   final int? ratingsCount;
   final String? maturityRating;
@@ -246,18 +244,18 @@ class PanelizationSummary {
 }
 
 class ImageLinks {
-  final String? smallThumbnail;
-  final String? thumbnail;
+  final String smallThumbnail;
+  final String thumbnail;
 
   ImageLinks({
-    this.smallThumbnail,
-    this.thumbnail,
+    required this.smallThumbnail,
+    required this.thumbnail,
   });
 
   factory ImageLinks.fromJson(Map<String, dynamic> json) {
     return ImageLinks(
-      smallThumbnail: json['smallThumbnail'],
-      thumbnail: json['thumbnail'],
+      smallThumbnail: json['smallThumbnail'] as String,
+      thumbnail: json['thumbnail'] as String ,
     );
   }
 

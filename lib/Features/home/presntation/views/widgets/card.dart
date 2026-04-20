@@ -1,21 +1,26 @@
-import 'package:bookly_app/Features/detailsView/presntation/views/details_View.dart';
+import 'package:bookly_app/Features/home/data/models/bookModel.dart';
 import 'package:bookly_app/appRouter.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class Card_of_List extends StatelessWidget {
-  const Card_of_List({super.key});
+  final BookModel bookModel;
+
+  const Card_of_List({super.key, required this.bookModel});
 
   @override
   Widget build(BuildContext context) {
+    final imageUrl = (bookModel.volumeInfo.imageLinks?.thumbnail ?? '')
+        .replaceFirst('http://', 'https://');
+
     return InkWell(
-      onTap: (){
+      onTap: () {
         GoRouter.of(context).push(AppRouter.KDetailsView);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Container(
+        child: SizedBox(
           height: 160,
           width: double.infinity,
           child: Row(
@@ -23,62 +28,71 @@ class Card_of_List extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  'assets/images/test_image.png',
-                  width: 110,
-                  height: 150,
-                  fit: BoxFit.cover,
+                child: AspectRatio(
+                  aspectRatio: 2.6 / 4,
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) =>
+                    const Icon(Icons.error),
+                  ),
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Harry Potter and the Goblet of Fire',
-                      style: TextStyle(
+                      bookModel.volumeInfo.title ?? 'No Title',
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        fontFamily: "Roboto Slab"
+                        fontFamily: "Roboto Slab",
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-
-                    SizedBox(height: 4),
-
+                    const SizedBox(height: 4),
                     Text(
-                      'J.K. Rowling',
-                      style: TextStyle(
+                      bookModel.volumeInfo.authors?.isNotEmpty == true
+                          ? bookModel.volumeInfo.authors![0]
+                          : 'Unknown Author',
+                      style: const TextStyle(
                         color: Colors.grey,
                       ),
                     ),
-
-                    SizedBox(height: 8),
-
+                    const SizedBox(height: 8),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          '19.99 €',
+                        const Text(
+                          'Free',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
-                        Spacer(flex: 1,),
-                        Row(children: [
-
-                          Icon(Icons.star, color: Colors.amber, size: 16),
-                          SizedBox(width: 4),
-
-                          Text('4.8',style: TextStyle(fontSize: 20),),
-                          SizedBox(width: 4),
-
-                          Text('(2390)', style: TextStyle(color: Colors.grey)),
-                        ],)
-
+                        const Spacer(),
+                        Row(
+                          children: [
+                            const Icon(Icons.star,
+                                color: Colors.amber, size: 16),
+                            const SizedBox(width: 4),
+                            Text(
+                              (bookModel.volumeInfo.averageRating ?? 0)
+                                  .toString(),
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              '(${(bookModel.volumeInfo.ratingsCount ?? 0).toString()})',
+                              style: const TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ],

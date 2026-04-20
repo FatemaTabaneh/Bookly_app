@@ -10,10 +10,13 @@ class FeaturedBestSellerCubit extends Cubit<FeaturedBestSellerState> {
   final HomeRepo homeRepo;
   Future<void> fetchBestSellerBooks()async{
     emit(FeaturedBestSellerLoading());
+    print('fetchFeaturedBooks called');
     try {
       var data=await homeRepo.fetchBestSellerBooks();
+      print(data.length);
       emit(FeaturedBestSellerSuccess(data));
     } on Exception catch (e) {
+      print(e.toString());
       emit(FeaturedBestSellerFailure(e.toString()));
     }
 

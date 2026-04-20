@@ -6,13 +6,12 @@ class result_ListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-     // shrinkWrap: true,
-      //physics: NeverScrollableScrollPhysics(),
+    return SizedBox();
+    /*ListView.builder(
       itemCount: 10,
       itemBuilder: (context, index) {
         return Card_of_List();
       },
-    );
+    );*/
   }
 }
