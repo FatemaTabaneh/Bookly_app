@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "592662245024",
+    "project_id": "notefication-909a8",
+    "storage_bucket": "notefication-909a8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592662245024:android:f0c8808312b83c5ff6a3c5",
+        "android_client_info": {
+          "package_name": "com.example.bookly_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKf3xIjTuQNtimubjKSg9LbsZmz5IhI-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

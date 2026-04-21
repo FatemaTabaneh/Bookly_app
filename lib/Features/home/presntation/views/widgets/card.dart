@@ -1,6 +1,7 @@
 import 'package:bookly_app/Features/home/data/models/bookModel.dart';
 import 'package:bookly_app/appRouter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,8 +16,13 @@ class Card_of_List extends StatelessWidget {
         .replaceFirst('http://', 'https://');
 
     return InkWell(
-      onTap: () {
-        GoRouter.of(context).push(AppRouter.KDetailsView);
+      onTap: () async{
+        FirebaseMessaging messaging = FirebaseMessaging.instance;
+        await messaging.requestPermission();
+        String? token = await messaging.getToken();
+        print("TOKEN: $token");
+
+        GoRouter.of(context).pushNamed(AppRouter.KDetailsView,extra: bookModel);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -58,6 +64,7 @@ class Card_of_List extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
+                      maxLines: 1,
                       bookModel.volumeInfo.authors?.isNotEmpty == true
                           ? bookModel.volumeInfo.authors![0]
                           : 'Unknown Author',
